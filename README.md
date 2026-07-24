@@ -1,18 +1,20 @@
-# 🚀 Smart Civic Connect
+#  Smart Civic Connect
 ### AI-Powered Civic Complaint Management System
 
 > Making civic issue reporting faster, smarter, and transparent using Artificial Intelligence, Geolocation, and Cloud Computing.
 
 ---
 
-## 👥 Team Details
+##  Team Details
 
-|       Name        |        Role          |
-|------             |------                |
-| KRISH K           | Full Stack Developer |
-| DARANITHRAN A     | Frontend Developer   |
-| ANANDTH ATHREYA R | Backend & Firebase   |
-| JEEVANRAJ M       | AI Integration       |
+|       Name        |        Role                          |
+|-------------------|--------------------------------------|
+| SIVASANKAR S      | Technical Lead & System Architect    |
+| KRISH K           | Full Stack Developer                 |
+| ANANDTH ATHREYA R | Backend & Firebase                   |
+| JEEVANRAJ M       | AI Integration                       |
+| DARANITHRAN A     | Frontend Developer                   |
+
 
 **Team Name:** TRENDSETTER
 
@@ -20,7 +22,7 @@
 
 ---
 
-# 📌 Problem Statement
+#  Problem Statement
 
 Citizens often struggle to report civic issues like potholes, garbage accumulation, broken streetlights, drainage problems, and water leakage.
 
@@ -37,29 +39,29 @@ This results in delayed responses and reduced citizen engagement.
 
 ---
 
-# 💡 Our Solution
+#  Our Solution
 
 **Smart Civic Connect** is an AI-powered complaint management platform that enables citizens to report civic issues in under one minute.
 
 The system automatically:
 
-⭐ Detects the user's GPS location
+* Detects the user's GPS location
 
-⭐ Identifies the responsible government department using AI
+* Identifies the responsible government department using AI
 
-⭐ Stores complaint data securely in Firebase
+* Stores complaint data securely in Firebase
 
-⭐ Allows complaint tracking using Complaint ID
+* Allows complaint tracking using Complaint ID
 
-⭐ Helps administrators visualize complaints on an interactive map
+* Helps administrators visualize complaints on an interactive map
 
-⭐ Converts GPS coordinates into readable addresses using Reverse Geocoding
+* Converts GPS coordinates into readable addresses using Reverse Geocoding
 
 ---
 
-# ✨ Key Features
+#  Key Features
 
-## 👤 Citizen Module
+##  Citizen Module
 
 - AI-powered department prediction
 - Complaint image upload
@@ -72,7 +74,7 @@ The system automatically:
 
 ---
 
-## 🛠 Admin Module
+##  Admin Module
 
 - Dashboard
 - Search complaints
@@ -84,7 +86,7 @@ The system automatically:
 
 ---
 
-## 🤖 AI Features
+##  AI Features
 
 - Automatic department classification
 - Prompt Engineering
@@ -93,7 +95,7 @@ The system automatically:
 
 ---
 
-# 🧰 Tech Stack
+#  Tech Stack
 
 ## Frontend
 
@@ -133,57 +135,13 @@ The system automatically:
 
 ---
 
-# 🏗 System Architecture
+#  System Architecture
 
-```text
-                Citizen
-
-                   │
-                   ▼
-
-          Complaint Submission
-
-                   │
-
-      ┌────────────┴────────────┐
-      │                         │
-
-      ▼                         ▼
-
-Image Upload             GPS Location
-
-      │                         │
-
-      └────────────┬────────────┘
-                   ▼
-
-         AI Department Prediction
-
-                   ▼
-
-            Complaint Preview
-
-                   ▼
-
-         Firebase Firestore
-         Firebase Storage
-
-                   ▼
-
-         Admin Dashboard
-
-                   ▼
-
-      Interactive Complaint Map
-
-                   ▼
-
-         Complaint Resolution
-```
+![System Architecture](images/architec.png)
 
 ---
 
-# 🔄 Workflow
+#  Workflow
 
 ## Step 1
 
@@ -245,85 +203,51 @@ Administrator updates complaint status.
 
 ---
 
-# 📁 Folder Structure
+#  Folder Structure
 
 ```text
 src/
 
 │
-
+|
 ├── assets/
-
+|
 ├── components/
-
+|
 │     ├── ComplaintCard.jsx
 │     ├── ComplaintsMap.jsx
 │     ├── LocationMap.jsx
 │
-
+|
 ├── hooks/
-
+|
 │     ├── useReverseGeocode.js
 │
-
+|
 ├── pages/
-
+|
 │     ├── Home.jsx
 │     ├── SubmitComplaint.jsx
 │     ├── TrackComplaint.jsx
 │     ├── AdminDashboard.jsx
 │
-
+|
 ├── services/
-
+|
 │     ├── ai.js
 │     ├── firebase.js
 │
-
+|
 ├── App.jsx
-
+|
 ├── main.jsx
-
+|
 └── App.css
 ```
 
 ---
 
-# ⚙ Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/username/smart-civic-connect.git
-```
-
----
-
-## Install Dependencies
-
-```bash
-npm install
-```
-
----
-
-## Start Development Server
-
-```bash
-npm run dev
-```
-
----
-
-## Build Project
-
-```bash
-npm run build
-```
-
----
-
-# 🔐 Environment Variables
+#  Environment Variables
 
 Create a `.env` file.
 
@@ -345,7 +269,7 @@ VITE_GEMINI_API_KEY=
 
 ---
 
-# 🗄 Database Design
+#  Database Design
 
 ## Firestore Collection
 
@@ -373,7 +297,7 @@ complaints
 
 ---
 
-# 🤖 AI Workflow
+#  AI Workflow
 
 ```text
 Complaint Description
@@ -411,7 +335,7 @@ Stored in Firestore
 
 ---
 
-# 🔒 Security Measures
+#  Security Measures
 
 - Firebase Security Rules
 - Environment Variables
@@ -424,22 +348,22 @@ Stored in Firestore
 
 ---
 
-# 🧪 Testing
+#  Testing
 
-| Module | Status |
-|---------|--------|
-| Complaint Submission | ✅ |
-| Image Upload | ✅ |
-| AI Prediction | ✅ |
-| GPS Location | ✅ |
-| Reverse Geocoding | ✅ |
-| Complaint Tracking | ✅ |
-| Admin Dashboard | ✅ |
-| Interactive Maps | ✅ |
+| Module               
+|---------             
+| Complaint Submission 
+| Image Upload         
+| AI Prediction       
+| GPS Location        
+| Reverse Geocoding    
+| Complaint Tracking   
+| Admin Dashboard      
+| Interactive Maps     
 
 ---
 
-# 📊 Performance
+#  Target Metrics
 
 - Average AI Response Time: ~2 seconds
 - Complaint Submission: <3 seconds
@@ -450,7 +374,7 @@ Stored in Firestore
 
 ---
 
-# ⚠ Challenges Faced
+#  Challenges Faced
 
 - GPS accuracy issues
 - Reverse Geocoding rate limits
@@ -462,7 +386,7 @@ Stored in Firestore
 
 ---
 
-# 🚀 Future Scope
+#   Future Scope
 
 - Mobile App
 - Push Notifications
@@ -477,57 +401,52 @@ Stored in Firestore
 
 ---
 
-# 📸 Demo Screenshots
+#  Demo Screenshots
 
 ## Home Page
 
-> *(Add Screenshot)*
+> ![Homepage](images/homepage.png)
 
 ---
 
 ## Complaint Submission
 
-> *(Add Screenshot)*
+> ![Complaint Submission](images/ComplaintSubmission.png)
 
 ---
 
 ## AI Department Prediction
 
-> *(Add Screenshot)*
+> ![AI Department Prediction](images/AiDepartmentTracking.png)
 
 ---
 
 ## Complaint Preview
 
-> *(Add Screenshot)*
+> ![Complaint Preview](images/ReviewComplaint.png)
 
 ---
 
 ## Complaint Tracking
 
-> *(Add Screenshot)*
+> ![Complaint Tracking](images/TrackComplaint.png)
 
 ---
 
 ## Admin Dashboard
 
-> *(Add Screenshot)*
+> ![Admin Dashboard](images/AdminDashboard.png)
 
 ---
 
 ## Complaint Map
 
-> *(Add Screenshot)*
+> ![Complaint Map](images/ComplaintMap.png)
+
 
 ---
 
-# 🎥 Demo Video
-
-Add YouTube or Drive Link
-
----
-
-# 📚 References
+#  References
 
 - React Documentation
 - Vite
@@ -539,12 +458,8 @@ Add YouTube or Drive Link
 
 ---
 
-# ❤️ Impact
+#  Impact
 
-Smart Civic Connect bridges the gap between citizens and government by making civic issue reporting **smart, transparent, and location-aware**.
-
-The platform reduces manual effort, improves complaint routing accuracy using AI, and provides real-time visibility for both citizens and administrators.
+Smart Civic Connect streamlines civic issue reporting through AI-powered department prediction, GPS-based location tracking, and real-time complaint management. It enhances transparency, reduces response time, and improves communication between citizens and government authorities.
 
 ---
-
-# ⭐ If you like this project, give it a Star!
