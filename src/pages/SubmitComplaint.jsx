@@ -1,3 +1,4 @@
+import { incrementSupportCount } from '../services/supportService'
 import { useEffect, useRef, useState } from 'react'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../services/firebase'
@@ -115,8 +116,9 @@ export default function SubmitComplaint() {
 
   const [description, setDescription] = useState('')
   const [descTouched, setDescTouched] = useState(false)
-
   const [location, setLocation] = useState(null)
+  const [supportingId, setSupportingId] = useState(null)
+  const [supportedReports, setSupportedReports] = useState(new Set())
   const [locating, setLocating] = useState(false)
   const [locationError, setLocationError] = useState('')
 
@@ -254,7 +256,37 @@ export default function SubmitComplaint() {
       setAnalyzing(false)
     }
   }
+async function handleSupport(complaintId) {
+  if (supportedReports.has(complaintId)) return
 
+  setSupportingId(complaintId)
+
+  try {
+    await incrementSupportCount(complaintId)
+
+    setDuplicates((prev) =>
+      prev.map((item) =>
+        item.id === complaintId
+          ? {
+              ...item,
+              supportCount: (item.supportCount || 0) + 1,
+            }
+          : item
+      )
+    )
+
+    setSupportedReports((prev) => {
+      const updated = new Set(prev)
+      updated.add(complaintId)
+      return updated
+    })
+  } catch (err) {
+    console.error('Failed to support complaint:', err)
+    alert('Unable to support this complaint. Please try again.')
+  } finally {
+    setSupportingId(null)
+  }
+}
   function handleReset() {
     setImageFile(null)
     setImagePreview(null)
@@ -581,6 +613,33 @@ export default function SubmitComplaint() {
                         <span className="duplicate-item-meta">
                           {Math.round(d.distanceMeters)}m away • {d.status}
                         </span>
+
+                        <p
+                          style={{
+                            marginTop: '8px',
+                            fontSize: '14px',
+                            fontWeight: 600,
+                          }}
+                        >
+                          👍 {d.supportCount || 0} Supports
+                        </p>
+
+                        <button
+                          type="button"
+                          className="btn btn-outline"
+                          style={{ marginTop: '10px' }}
+                          onClick={() => handleSupport(d.id)}
+                          disabled={
+                            supportingId === d.id ||
+                            supportedReports.has(d.id)
+                          }
+                        >
+                          {supportingId === d.id
+                            ? 'Supporting...'
+                            : supportedReports.has(d.id)
+                            ? '✓ Supported'
+                            : 'Support This Report'}
+                        </button>
                       </div>
                     </div>
                   ))}
