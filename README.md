@@ -136,51 +136,7 @@ The system automatically:
 
 #  System Architecture
 
-```text
-                Citizen
-
-                   │
-                   ▼
-
-          Complaint Submission
-
-                   │
-
-      ┌────────────┴────────────┐
-      │                         │
-
-      ▼                         ▼
-
-Image Upload             GPS Location
-
-      │                         │
-
-      └────────────┬────────────┘
-                   ▼
-
-         AI Department Prediction
-
-                   ▼
-
-            Complaint Preview
-
-                   ▼
-
-         Firebase Firestore
-         Firebase Storage
-
-                   ▼
-
-         Admin Dashboard
-
-                   ▼
-
-      Interactive Complaint Map
-
-                   ▼
-
-         Complaint Resolution
-```
+![System Architecture](images/architec.png)
 
 ---
 
@@ -506,7 +462,7 @@ Stored in Firestore
 
 ## Complaint Tracking
 
-> *(Add Screenshot)*
+> ![Complaint Tracking](images/TrackComplaint.png)
 
 ---
 
