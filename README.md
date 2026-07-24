@@ -488,19 +488,19 @@ Stored in Firestore
 
 ## Complaint Submission
 
-> *(Add Screenshot)*
+> ![Complaint Submission](images/ComplaintSubmission.png)
 
 ---
 
 ## AI Department Prediction
 
-> *(Add Screenshot)*
+> ![AI Department Prediction](images/AiDepartmentTracking.png)
 
 ---
 
 ## Complaint Preview
 
-> *(Add Screenshot)*
+> ![Complaint Preview](images/ReviewComplaint.png)
 
 ---
 
@@ -512,19 +512,14 @@ Stored in Firestore
 
 ## Admin Dashboard
 
-> *(Add Screenshot)*
+> ![Admin Dashboard](images/AdminDashboard.png)
 
 ---
 
 ## Complaint Map
 
-> *(Add Screenshot)*
+> ![Complaint Map](images/ComplaintMap.png)
 
----
-
-#  Demo Video
-
-Add YouTube or Drive Link
 
 ---
 
