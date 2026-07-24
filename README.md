@@ -8,12 +8,12 @@
 ##  Team Details
 
 |       Name        |        Role                          |
-|------             |------                                |
+|-------------------|--------------------------------------|
 | SIVASANKAR S      | Technical Lead & System Architect    |
 | KRISH K           | Full Stack Developer                 |
-| DARANITHRAN A     | Frontend Developer                   |
 | ANANDTH ATHREYA R | Backend & Firebase                   |
 | JEEVANRAJ M       | AI Integration                       |
+| DARANITHRAN A     | Frontend Developer                   |
 
 
 **Team Name:** TRENDSETTER
@@ -209,74 +209,40 @@ Administrator updates complaint status.
 src/
 
 │
-
+|
 ├── assets/
-
+|
 ├── components/
-
+|
 │     ├── ComplaintCard.jsx
 │     ├── ComplaintsMap.jsx
 │     ├── LocationMap.jsx
 │
-
+|
 ├── hooks/
-
+|
 │     ├── useReverseGeocode.js
 │
-
+|
 ├── pages/
-
+|
 │     ├── Home.jsx
 │     ├── SubmitComplaint.jsx
 │     ├── TrackComplaint.jsx
 │     ├── AdminDashboard.jsx
 │
-
+|
 ├── services/
-
+|
 │     ├── ai.js
 │     ├── firebase.js
 │
-
+|
 ├── App.jsx
-
+|
 ├── main.jsx
-
+|
 └── App.css
-```
-
----
-
-#  Installation
-
-## Clone Repository
-
-```bash
-git clone https://github.com/JeevanrajX/TrendSetter.git
-```
-
----
-
-## Install Dependencies
-
-```bash
-npm install
-```
-
----
-
-## Start Development Server
-
-```bash
-npm run dev
-```
-
----
-
-## Build Project
-
-```bash
-npm run build
 ```
 
 ---
