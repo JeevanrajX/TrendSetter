@@ -1,11 +1,11 @@
-# 🚀 Smart Civic Connect
+#  Smart Civic Connect
 ### AI-Powered Civic Complaint Management System
 
 > Making civic issue reporting faster, smarter, and transparent using Artificial Intelligence, Geolocation, and Cloud Computing.
 
 ---
 
-## 👥 Team Details
+##  Team Details
 
 |       Name        |        Role          |
 |------             |------                |
@@ -21,7 +21,7 @@
 
 ---
 
-# 📌 Problem Statement
+#  Problem Statement
 
 Citizens often struggle to report civic issues like potholes, garbage accumulation, broken streetlights, drainage problems, and water leakage.
 
@@ -38,29 +38,29 @@ This results in delayed responses and reduced citizen engagement.
 
 ---
 
-# 💡 Our Solution
+#  Our Solution
 
 **Smart Civic Connect** is an AI-powered complaint management platform that enables citizens to report civic issues in under one minute.
 
 The system automatically:
 
-⭐ Detects the user's GPS location
+* Detects the user's GPS location
 
-⭐ Identifies the responsible government department using AI
+* Identifies the responsible government department using AI
 
-⭐ Stores complaint data securely in Firebase
+* Stores complaint data securely in Firebase
 
-⭐ Allows complaint tracking using Complaint ID
+* Allows complaint tracking using Complaint ID
 
-⭐ Helps administrators visualize complaints on an interactive map
+* Helps administrators visualize complaints on an interactive map
 
-⭐ Converts GPS coordinates into readable addresses using Reverse Geocoding
+* Converts GPS coordinates into readable addresses using Reverse Geocoding
 
 ---
 
-# ✨ Key Features
+#  Key Features
 
-## 👤 Citizen Module
+##  Citizen Module
 
 - AI-powered department prediction
 - Complaint image upload
@@ -85,7 +85,7 @@ The system automatically:
 
 ---
 
-## 🤖 AI Features
+##  AI Features
 
 - Automatic department classification
 - Prompt Engineering
@@ -94,7 +94,7 @@ The system automatically:
 
 ---
 
-# 🧰 Tech Stack
+#  Tech Stack
 
 ## Frontend
 
@@ -184,7 +184,7 @@ Image Upload             GPS Location
 
 ---
 
-# 🔄 Workflow
+#  Workflow
 
 ## Step 1
 
@@ -246,7 +246,7 @@ Administrator updates complaint status.
 
 ---
 
-# 📁 Folder Structure
+#  Folder Structure
 
 ```text
 src/
@@ -324,7 +324,7 @@ npm run build
 
 ---
 
-# 🔐 Environment Variables
+#  Environment Variables
 
 Create a `.env` file.
 
@@ -346,7 +346,7 @@ VITE_GEMINI_API_KEY=
 
 ---
 
-# 🗄 Database Design
+#  Database Design
 
 ## Firestore Collection
 
@@ -374,7 +374,7 @@ complaints
 
 ---
 
-# 🤖 AI Workflow
+#  AI Workflow
 
 ```text
 Complaint Description
@@ -412,7 +412,7 @@ Stored in Firestore
 
 ---
 
-# 🔒 Security Measures
+#  Security Measures
 
 - Firebase Security Rules
 - Environment Variables
@@ -425,7 +425,7 @@ Stored in Firestore
 
 ---
 
-# 🧪 Testing
+#  Testing
 
 | Module | Status |
 |---------|--------|
@@ -440,7 +440,7 @@ Stored in Firestore
 
 ---
 
-# 📊 Performance
+#  Performance
 
 - Average AI Response Time: ~2 seconds
 - Complaint Submission: <3 seconds
@@ -451,7 +451,7 @@ Stored in Firestore
 
 ---
 
-# ⚠ Challenges Faced
+#  Challenges Faced
 
 - GPS accuracy issues
 - Reverse Geocoding rate limits
@@ -478,7 +478,7 @@ Stored in Firestore
 
 ---
 
-# 📸 Demo Screenshots
+#  Demo Screenshots
 
 ## Home Page
 
@@ -522,13 +522,13 @@ Stored in Firestore
 
 ---
 
-# 🎥 Demo Video
+#  Demo Video
 
 Add YouTube or Drive Link
 
 ---
 
-# 📚 References
+#  References
 
 - React Documentation
 - Vite
@@ -540,7 +540,7 @@ Add YouTube or Drive Link
 
 ---
 
-# ❤️ Impact
+#  Impact
 
 Smart Civic Connect bridges the gap between citizens and government by making civic issue reporting **smart, transparent, and location-aware**.
 
@@ -548,4 +548,4 @@ The platform reduces manual effort, improves complaint routing accuracy using AI
 
 ---
 
-# ⭐ If you like this project, give it a Star!
+#  If you like this project, give it a Star!
