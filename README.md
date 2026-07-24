@@ -134,7 +134,7 @@ The system automatically:
 
 ---
 
-# 🏗 System Architecture
+#  System Architecture
 
 ```text
                 Citizen
