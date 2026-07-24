@@ -440,7 +440,7 @@ Stored in Firestore
 
 ---
 
-#  Performance
+#  Target Metrics
 
 - Average AI Response Time: ~2 seconds
 - Complaint Submission: <3 seconds
