@@ -482,7 +482,7 @@ Stored in Firestore
 
 ## Home Page
 
-> (images/homepage.png)
+> ![Homepage](images/homepage.png)
 
 ---
 
