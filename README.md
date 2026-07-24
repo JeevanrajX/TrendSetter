@@ -13,6 +13,7 @@
 | DARANITHRAN A     | Frontend Developer   |
 | ANANDTH ATHREYA R | Backend & Firebase   |
 | JEEVANRAJ M       | AI Integration       |
+| SIVASANKAR S      | -----------------    |
 
 **Team Name:** TRENDSETTER
 
