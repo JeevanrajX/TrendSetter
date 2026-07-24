@@ -482,7 +482,7 @@ Stored in Firestore
 
 ## Home Page
 
-> *(Add Screenshot)*
+> (images/homepage.png)
 
 ---
 
