@@ -7,13 +7,13 @@
 
 ##  Team Details
 
-|       Name        |        Role          |
-|------             |------                |
-| KRISH K           | Full Stack Developer |
-| DARANITHRAN A     | Frontend Developer   |
-| ANANDTH ATHREYA R | Backend & Firebase   |
-| JEEVANRAJ M       | AI Integration       |
-| SIVASANKAR S      | -----------------    |
+|       Name        |        Role                          |
+|------             |------                                |
+| KRISH K           | Full Stack Developer                 |
+| DARANITHRAN A     | Frontend Developer                   |
+| ANANDTH ATHREYA R | Backend & Firebase                   |
+| JEEVANRAJ M       | AI Integration                       |
+| SIVASANKAR S      | Technical Lead & System Architect    |
 
 **Team Name:** TRENDSETTER
 
