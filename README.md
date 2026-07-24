@@ -73,7 +73,7 @@ The system automatically:
 
 ---
 
-## 🛠 Admin Module
+##  Admin Module
 
 - Dashboard
 - Search complaints
@@ -290,12 +290,12 @@ src/
 
 ---
 
-# ⚙ Installation
+#  Installation
 
 ## Clone Repository
 
 ```bash
-git clone https://github.com/username/smart-civic-connect.git
+git clone https://github.com/JeevanrajX/TrendSetter.git
 ```
 
 ---
@@ -427,16 +427,16 @@ Stored in Firestore
 
 #  Testing
 
-| Module | Status |
-|---------|--------|
-| Complaint Submission | ✅ |
-| Image Upload | ✅ |
-| AI Prediction | ✅ |
-| GPS Location | ✅ |
-| Reverse Geocoding | ✅ |
-| Complaint Tracking | ✅ |
-| Admin Dashboard | ✅ |
-| Interactive Maps | ✅ |
+| Module               | Status   |
+|---------             |--------  |
+| Complaint Submission | ✅      |
+| Image Upload         | ✅      |
+| AI Prediction        | ✅      |
+| GPS Location         | ✅      |
+| Reverse Geocoding    | ✅      |
+| Complaint Tracking   | ✅      |
+| Admin Dashboard      | ✅      |
+| Interactive Maps     | ✅      |
 
 ---
 
@@ -463,7 +463,7 @@ Stored in Firestore
 
 ---
 
-# 🚀 Future Scope
+#   Future Scope
 
 - Mobile App
 - Push Notifications
@@ -547,5 +547,3 @@ Smart Civic Connect bridges the gap between citizens and government by making ci
 The platform reduces manual effort, improves complaint routing accuracy using AI, and provides real-time visibility for both citizens and administrators.
 
 ---
-
-#  If you like this project, give it a Star!
