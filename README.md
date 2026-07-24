@@ -460,8 +460,6 @@ Stored in Firestore
 
 #  Impact
 
-Smart Civic Connect bridges the gap between citizens and government by making civic issue reporting **smart, transparent, and location-aware**.
-
-The platform reduces manual effort, improves complaint routing accuracy using AI, and provides real-time visibility for both citizens and administrators.
+Smart Civic Connect streamlines civic issue reporting through AI-powered department prediction, GPS-based location tracking, and real-time complaint management. It enhances transparency, reduces response time, and improves communication between citizens and government authorities.
 
 ---
