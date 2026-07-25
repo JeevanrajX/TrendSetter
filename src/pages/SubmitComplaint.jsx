@@ -618,7 +618,7 @@ async function handleSupport(complaintId) {
           </div>
           <div className="preview-row">
             <span className="preview-row-label">Address</span>
-            <span className="preview-row-value">Not available yet (Milestone 3)</span>
+            <span className="preview-row-value">Coordinates captured successfully</span>
           </div>
           <div className="preview-row">
             <span className="preview-row-label">Department</span>
