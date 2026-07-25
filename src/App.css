@@ -1132,3 +1132,87 @@ a {
   font-size: 12px;
   color: var(--ink-soft);
 }
+/* ===== Milestone 9: AI Intelligent Duplicate Detection ===== */
+
+.duplicate-scores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.duplicate-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 10px;
+  border-radius: 10px;
+  background: rgba(36, 94, 86, 0.08);
+  border: 1px solid rgba(36, 94, 86, 0.18);
+  text-align: center;
+}
+
+.duplicate-score-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--teal-dark);
+}
+
+.duplicate-score-label {
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.merge-note {
+  margin: 0 0 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: rgba(36, 94, 86, 0.08);
+  border: 1px solid rgba(36, 94, 86, 0.18);
+  font-size: 14px;
+  color: var(--teal-dark);
+  line-height: 1.5;
+}
+
+.admin-card-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.admin-card-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.admin-score-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.admin-score-row span:last-child {
+  font-weight: 700;
+  color: var(--teal-dark);
+}
+
+.admin-score-reason {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}

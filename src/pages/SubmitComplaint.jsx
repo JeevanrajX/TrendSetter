@@ -1,4 +1,4 @@
-import { incrementSupportCount } from '../services/supportService'
+import { incrementSupportCount, mergeDuplicateReport } from '../services/supportService'
 import { useEffect, useRef, useState } from 'react'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../services/firebase'
@@ -6,7 +6,11 @@ import { uploadImage } from '../services/cloudinary'
 import { DEPARTMENTS, suggestDepartment } from '../services/ai'
 import { useReverseGeocode } from '../hooks/useReverseGeocode'
 import LocationMap from '../components/LocationMap'
-import { findNearbyDuplicates } from '../services/duplicates'
+import { findNearbyDuplicates, analyzeNearbyDuplicates } from '../services/duplicates'
+
+// Score thresholds for the intelligent duplicate engine (Milestone 9).
+const AUTO_MERGE_SCORE = 95 // >= : silently merge into the existing report
+const POSSIBLE_DUPLICATE_SCORE = 80 // 80–94 : ask the user what to do
 // Short, human-readable complaint IDs like "SCC-8F3K2P".
 // Avoids visually confusing characters (0/O, 1/I).
 function generateComplaintId() {
@@ -109,7 +113,7 @@ function IconUsers(props) {
   )
 }
 export default function SubmitComplaint() {
-  const [step, setStep] = useState('form') // 'form' | 'preview' | 'success'
+  const [step, setStep] = useState('form') // 'form' | 'preview' | 'duplicate' | 'success'
 
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
@@ -134,13 +138,23 @@ export default function SubmitComplaint() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [complaintId, setComplaintId] = useState(null)
+
+  // Milestone 9: intelligent duplicate detection on submit.
+  const [duplicateMatch, setDuplicateMatch] = useState(null) // top scored result | null
+  const [wasMerged, setWasMerged] = useState(false)
+  const [mergeMessage, setMergeMessage] = useState('')
+  const [mergeLocation, setMergeLocation] = useState(null) // existing complaint's coords on a merge
+
+  // On a merge the success screen describes the EXISTING complaint, so it
+  // must show that complaint's location — not the submitter's coordinates.
+  const successLocation = wasMerged ? mergeLocation : location
   const {
     address,
     loading: addressLoading,
     error: addressError,
   } = useReverseGeocode(
-    step === 'success' ? location?.lat : null,
-    step === 'success' ? location?.lng : null
+    step === 'success' ? successLocation?.lat : null,
+    step === 'success' ? successLocation?.lng : null
   )
   const galleryInputRef = useRef(null)
   const cameraInputRef = useRef(null)
@@ -300,6 +314,9 @@ async function handleSupport(complaintId) {
     setAiError('')
     setSubmitError('')
     setComplaintId(null)
+    setDuplicateMatch(null)
+    setWasMerged(false)
+    setMergeMessage('')
     if (galleryInputRef.current) galleryInputRef.current.value = ''
     if (cameraInputRef.current) cameraInputRef.current.value = ''
   }
@@ -310,29 +327,113 @@ async function handleSupport(complaintId) {
     setStep('preview')
   }
 
+  // Creates a brand-new complaint document. Shared by the normal submit
+  // path and the "Continue Anyway" choice on the duplicate screen.
+  async function createComplaint() {
+    const newComplaintId = generateComplaintId()
+    const imageUrl = await uploadImage(imageFile)
+
+    await setDoc(doc(db, 'complaints', newComplaintId), {
+      complaintId: newComplaintId,
+      description,
+      department: department === 'auto' ? 'Auto Detect' : department,
+      lat: location.lat,
+      lng: location.lng,
+      imageUrl,
+      status: 'Submitted',
+      supportCount: 0,
+      duplicateReports: 0,
+      createdAt: serverTimestamp(),
+    })
+
+    setComplaintId(newComplaintId)
+    setWasMerged(false)
+    setStep('success')
+  }
+
+  // Records a merge into an existing complaint and lands on the success
+  // screen. Shared by auto-merge and the "Support Existing" choice.
+  async function mergeInto(match, message) {
+    await mergeDuplicateReport(match.complaint.id, {
+      overallScore: match.overallScore,
+      locationScore: match.locationScore,
+      aiScore: match.aiScore,
+      reason: match.reason,
+    })
+    setComplaintId(match.complaint.complaintId || match.complaint.id)
+    setMergeLocation(
+      match.complaint.lat != null && match.complaint.lng != null
+        ? { lat: match.complaint.lat, lng: match.complaint.lng }
+        : null
+    )
+    setWasMerged(true)
+    setMergeMessage(message)
+    setStep('success')
+  }
+
   async function handleSubmit() {
     setSubmitError('')
     setSubmitting(true)
+
     try {
-      const newComplaintId = generateComplaintId()
-      const imageUrl = await uploadImage(imageFile)
-
-      await setDoc(doc(db, 'complaints', newComplaintId), {
-        complaintId: newComplaintId,
+      
+      const scored = await analyzeNearbyDuplicates(
         description,
-        department: department === 'auto' ? 'Auto Detect' : department,
-        lat: location.lat,
-        lng: location.lng,
-        imageUrl,
-        status: 'Submitted',
-        createdAt: serverTimestamp(),
-      })
+        location.lat,
+        location.lng
+      );
 
-      setComplaintId(newComplaintId)
-      setStep('success')
+
+
+      const top = scored[0] || null;
+      if (top && top.overallScore >= AUTO_MERGE_SCORE) {
+
+        await mergeInto(
+          top,
+          "This complaint was automatically merged with an existing report."
+        );
+      } else if (top && top.overallScore >= POSSIBLE_DUPLICATE_SCORE) {
+
+        setDuplicateMatch(top);
+        setStep("duplicate");
+      } else {
+
+        await createComplaint();
+      }
+    } catch (err) {
+      console.error("❌ handleSubmit Error:", err);
+
+      setSubmitError(
+        "Something went wrong submitting your complaint. Please try again."
+      );
+    } finally {
+
+
+      setSubmitting(false);
+    }
+  }
+  async function handleContinueAnyway() {
+    setSubmitError('')
+    setSubmitting(true)
+    try {
+      await createComplaint()
     } catch (err) {
       console.error(err)
       setSubmitError('Something went wrong submitting your complaint. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function handleSupportExisting() {
+    if (!duplicateMatch) return
+    setSubmitError('')
+    setSubmitting(true)
+    try {
+      await mergeInto(duplicateMatch, 'Your report was added to an existing complaint.')
+    } catch (err) {
+      console.error(err)
+      setSubmitError('Something went wrong. Please try again.')
     } finally {
       setSubmitting(false)
     }
@@ -342,18 +443,23 @@ async function handleSupport(complaintId) {
     return (
       <main className="submit-page">
         <div className="page-head">
-          <p className="eyebrow">Success</p>
-          <h1>Complaint Submitted</h1>
-          <p className="page-sub">Your complaint has been recorded. Save this ID to track its progress.</p>
+          <p className="eyebrow">{wasMerged ? 'Merged' : 'Success'}</p>
+          <h1>{wasMerged ? 'Report Merged' : 'Complaint Submitted'}</h1>
+          <p className="page-sub">
+            {wasMerged
+              ? 'Your report was linked to an existing complaint. Track it with the ID below.'
+              : 'Your complaint has been recorded. Save this ID to track its progress.'}
+          </p>
         </div>
 
         <div className="preview-card success-card">
           <div className="success-icon">
             <IconCheck />
           </div>
-          <p className="success-id-label">Complaint ID</p>
+          {wasMerged && <p className="merge-note">{mergeMessage}</p>}
+          <p className="success-id-label">{wasMerged ? 'Existing Complaint ID' : 'Complaint ID'}</p>
           <p className="success-id">{complaintId}</p>
-          <p className="preview-note">Status: Submitted</p>
+          {!wasMerged && <p className="preview-note">Status: Submitted</p>}
           {addressLoading && (
             <p className="ai-hint">Looking up address...</p>
           )}
@@ -381,6 +487,101 @@ async function handleSupport(complaintId) {
               }}
             >
               Submit Another Complaint
+            </button>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (step === 'duplicate' && duplicateMatch) {
+    const existing = duplicateMatch.complaint
+
+    return (
+      <main className="submit-page">
+        <div className="page-head">
+          <p className="eyebrow">Heads Up</p>
+          <h1>Possible Duplicate Found</h1>
+          <p className="page-sub">
+            A nearby report looks like it could be the same issue. Support it, or continue with a new complaint.
+          </p>
+        </div>
+
+        <div className="preview-card">
+          <div className="duplicate-scores">
+            <div className="duplicate-score">
+              <span className="duplicate-score-value">{duplicateMatch.overallScore}%</span>
+              <span className="duplicate-score-label">Overall Match</span>
+            </div>
+            <div className="duplicate-score">
+              <span className="duplicate-score-value">{duplicateMatch.aiScore}%</span>
+              <span className="duplicate-score-label">Text Score</span>
+            </div>
+            <div className="duplicate-score">
+              <span className="duplicate-score-value">{duplicateMatch.locationScore}%</span>
+              <span className="duplicate-score-label">Location</span>
+            </div>
+          </div>
+
+          <p className="merge-note">{duplicateMatch.reason}</p>
+
+          <div className="duplicate-item">
+            {existing.imageUrl && (
+              <img src={existing.imageUrl} alt="Existing report" className="duplicate-item-image" />
+            )}
+            <div className="duplicate-item-body">
+              <p className="duplicate-item-description">{existing.description}</p>
+              <span className="duplicate-item-meta">
+                {Math.round(existing.distanceMeters)}m away • {existing.status}
+              </span>
+              <p style={{ marginTop: '8px', fontSize: '14px', fontWeight: 600 }}>
+                👍 {existing.supportCount || 0} Supports
+              </p>
+            </div>
+          </div>
+
+          {submitError && <p className="field-error">{submitError}</p>}
+
+          <div className="form-actions">
+            <button
+              type="button"
+              className="btn btn-outline"
+              onClick={() => {
+                setSubmitError('')
+                setDuplicateMatch(null)
+                setStep('form')
+              }}
+              disabled={submitting}
+            >
+              <IconEdit /> Back to Edit
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline"
+              onClick={handleContinueAnyway}
+              disabled={submitting}
+            >
+              {submitting ? (
+                <>
+                  <span className="spinner" /> Working…
+                </>
+              ) : (
+                'Continue Anyway'
+              )}
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleSupportExisting}
+              disabled={submitting}
+            >
+              {submitting ? (
+                <>
+                  <span className="spinner" /> Working…
+                </>
+              ) : (
+                'Support Existing'
+              )}
             </button>
           </div>
         </div>

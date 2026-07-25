@@ -185,6 +185,43 @@ export default function AdminDashboard() {
                   <span>{c.department}</span>
                   <span>{formatTimestamp(c.createdAt)}</span>
                 </div>
+
+                <div className="admin-card-stats">
+                  <span>👍 {c.supportCount || 0} Supports</span>
+                  <span>🔁 {c.duplicateReports || 0} Duplicate Reports</span>
+                </div>
+
+                {(c.duplicateScore != null || c.locationScore != null || c.aiScore != null || c.duplicateReason || c.lastMergedAt) && (
+                  <div className="admin-card-scores">
+                    {c.duplicateScore != null && (
+                      <div className="admin-score-row">
+                        <span>Overall Score</span>
+                        <span>{c.duplicateScore}%</span>
+                      </div>
+                    )}
+                    {c.locationScore != null && (
+                      <div className="admin-score-row">
+                        <span>Location Score</span>
+                        <span>{c.locationScore}%</span>
+                      </div>
+                    )}
+                    {c.aiScore != null && (
+                      <div className="admin-score-row">
+                        <span>AI Score</span>
+                        <span>{c.aiScore}%</span>
+                      </div>
+                    )}
+                    {c.lastMergedAt && (
+                      <div className="admin-score-row">
+                        <span>Latest Merge</span>
+                        <span>{formatTimestamp(c.lastMergedAt)}</span>
+                      </div>
+                    )}
+                    {c.duplicateReason && (
+                      <p className="admin-score-reason">{c.duplicateReason}</p>
+                    )}
+                  </div>
+                )}
                 <label className="admin-card-status-label" htmlFor={`status-${c.complaintId}`}>
                   Update Status
                 </label>

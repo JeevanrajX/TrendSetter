@@ -2,6 +2,7 @@
 
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from './firebase'
+import { analyzeDuplicate } from './ai'
 
 const DEFAULT_RADIUS_METERS = 500
 
@@ -94,4 +95,87 @@ export async function findNearbyDuplicates(
   matches.sort((a, b) => a.distanceMeters - b.distanceMeters)
 
   return matches
+}
+
+/**
+ * Converts a Haversine distance into a location similarity score.
+ *
+ * @param {number} distanceMeters
+ * @returns {number} 0–100
+ */
+function locationScoreForDistance(distanceMeters) {
+  if (distanceMeters <= 100) return 100
+  if (distanceMeters <= 250) return 80
+  if (distanceMeters <= 500) return 60
+  return 0
+}
+
+/**
+ * Intelligent duplicate detection. Finds nearby complaints, runs the AI
+ * text comparison against each, and blends geographic proximity with the
+ * AI's confidence into an overall score.
+ *
+ * Overall = 40% Location + 60% AI. If the AI comparison for a candidate
+ * fails (rate limit, timeout, bad key…), that candidate degrades to a
+ * location-only score rather than breaking the whole submit flow.
+ *
+ * @param {string} newDescription
+ * @param {number} lat
+ * @param {number} lng
+ * @param {Object} [options]
+ * @param {number} [options.radiusMeters=500]
+ * @param {number} [options.maxComparisons] Optional hard cap on the number
+ *   of AI comparisons; omitted means every nearby complaint is compared.
+ *
+ * @returns {Promise<Array<{
+ *   overallScore: number,
+ *   locationScore: number,
+ *   aiScore: number,
+ *   reason: string,
+ *   complaint: Object,
+ * }>>} Sorted by overallScore, descending.
+ */
+export async function analyzeNearbyDuplicates(newDescription, lat, lng, options = {}) {
+  const {
+    radiusMeters = DEFAULT_RADIUS_METERS,
+    maxComparisons,
+  } = options
+
+  const nearby = await findNearbyDuplicates(lat, lng, { radiusMeters })
+  // Compare against every nearby complaint by default. The final ranking
+  // blends location and AI, so a farther complaint can still be the best
+  // match — pre-filtering by distance would hide those.
+  const candidates = maxComparisons ? nearby.slice(0, maxComparisons) : nearby
+  const scored = []
+
+  // Sequential, not Promise.all: a concurrent burst against the shared
+  // Hugging Face endpoint tends to hit the free-tier rate limit (429),
+  // which would degrade real duplicates to a location-only score.
+  for (const complaint of candidates) {
+    const locationScore = locationScoreForDistance(complaint.distanceMeters)
+
+    let aiScore = 0
+    let reason = 'AI comparison unavailable — scored on location only.'
+
+    try {
+      const result = await analyzeDuplicate(newDescription, complaint.description)
+
+      console.log(
+        "AI Result:",
+        JSON.stringify(result, null, 2)
+      );
+
+      aiScore = result.confidence
+      reason = result.reason
+    } catch (err) {
+      console.error("AI duplicate comparison failed:", err);
+    }
+    const overallScore = Math.round(0.4 * locationScore + 0.6 * aiScore)
+
+    scored.push({ overallScore, locationScore, aiScore, reason, complaint })
+  }
+
+  scored.sort((a, b) => b.overallScore - a.overallScore)
+
+  return scored
 }
