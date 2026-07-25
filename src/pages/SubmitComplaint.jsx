@@ -868,7 +868,7 @@ async function handleSupport(complaintId) {
             className="address-input"
             readOnly
             value=""
-            placeholder="Address lookup will be added in Milestone 3"
+            placeholder="📍 Coordinates captured successfully."
           />
         </section>
 

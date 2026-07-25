@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-
+import logo from '../assets/logo.png'
 export default function Navbar() {
   const [open, setOpen] = useState(false)
 
@@ -10,7 +10,11 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-inner">
         <Link to="/" className="brand" onClick={() => setOpen(false)}>
-          <span className="brand-mark">SC</span>
+          <img
+            src={logo}
+            alt="Smart Civic Connect Logo"
+            className="brand-logo"
+          />
           <span className="brand-name">Smart Civic Connect</span>
         </Link>
 

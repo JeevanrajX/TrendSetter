@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git --no-pager diff 4baab3e -- src/pages/SubmitComplaint.jsx)",
+      "Bash(git --no-pager diff 4baab3e -- src/services/supportService.js)",
+      "Bash(git --no-pager diff 4baab3e -- src/services/duplicates.js)",
+      "Bash(git --no-pager diff 4baab3e -- src/pages/AdminDashboard.jsx)",
+      "Bash(git --no-pager diff 4baab3e --stat -- src/App.css)",
+      "Bash(git --no-pager diff 4baab3e -- src/App.css)"
+    ]
+  }
+}
