@@ -7,6 +7,7 @@ import { DEPARTMENTS, suggestDepartment } from '../services/ai'
 import { useReverseGeocode } from '../hooks/useReverseGeocode'
 import LocationMap from '../components/LocationMap'
 import { findNearbyDuplicates, analyzeNearbyDuplicates } from '../services/duplicates'
+import { useAuth } from '../context/AuthContext'
 
 // Score thresholds for the intelligent duplicate engine (Milestone 9).
 const AUTO_MERGE_SCORE = 95 // >= : silently merge into the existing report
@@ -138,7 +139,7 @@ export default function SubmitComplaint() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState('')
   const [complaintId, setComplaintId] = useState(null)
-
+  const { user } = useAuth()
   // Milestone 9: intelligent duplicate detection on submit.
   const [duplicateMatch, setDuplicateMatch] = useState(null) // top scored result | null
   const [wasMerged, setWasMerged] = useState(false)
@@ -335,6 +336,11 @@ async function handleSupport(complaintId) {
 
     await setDoc(doc(db, 'complaints', newComplaintId), {
       complaintId: newComplaintId,
+
+      userId: user.uid,
+      userEmail: user.email,
+      userName: user.displayName || 'Citizen',
+
       description,
       department: department === 'auto' ? 'Auto Detect' : department,
       lat: location.lat,

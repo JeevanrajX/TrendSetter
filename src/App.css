@@ -1221,3 +1221,80 @@ a {
   color: var(--ink-soft);
   line-height: 1.4;
 }
+/* Authentication Inputs */
+.text-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  color: #111827;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.text-input::placeholder {
+  color: #9ca3af;
+}
+
+/* Login/Register Switch Text */
+.auth-switch {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.auth-switch a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
+.nav-logout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  margin-left: 1rem;
+}
+
+.nav-logout:hover {
+  color: #2563eb;
+}
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.status-badge.submitted {
+  background: #f59e0b;
+}
+
+.status-badge.in-progress {
+  background: #2563eb;
+}
+
+.status-badge.resolved {
+  background: #16a34a;
+}
+
+.status-badge.rejected {
+  background: #dc2626;
+}
